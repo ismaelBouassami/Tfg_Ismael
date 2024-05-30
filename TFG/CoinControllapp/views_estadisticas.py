@@ -75,7 +75,7 @@ def obtener_filtro_mes(request,mes,tipo):
         # Obtener todos los gastos para el mes actual
         gastos_mes_actual = Gasto.objects.filter(
             (Q(fecha__month=mes_actual, fecha__year=año_actual)) |  # Gastos no recurrentes del mes actual
-            (Q(fecha__month__lte=mes_actual, fechaFin__month__gte=mes_actual ))& (Q(fecha__year=año_actual) |(Q(fecha__year=año_actual, fecha__month=mes_actual)) ) # Gastos recurrentes que se superponen con el mes actual
+            (Q(fecha__month__lte=mes_actual, fechaFin__month__gte=mes_actual ))& (Q(fecha__year=año_actual) |(Q(fecha__year=año_actual, fecha__month=mes_actual))),usuario =request.user  # Gastos recurrentes que se superponen con el mes actual
         )
 
         # Crea un DataFrame de Pandas con los datos de los gastos
@@ -87,7 +87,7 @@ def obtener_filtro_mes(request,mes,tipo):
     else:
         ingresos_mes_actual = Ingreso.objects.filter(
             (Q(fecha__month=mes_actual, fecha__year=año_actual)) |  # Gastos no recurrentes del mes actual
-            (Q(fecha__month__lte=mes_actual, fechaFin__month__gte=mes_actual))& (Q(fecha__year=año_actual) |(Q(fecha__year=año_actual, fecha__month=mes_actual)) ) # Gastos recurrentes que se superponen con el mes actual
+            (Q(fecha__month__lte=mes_actual, fechaFin__month__gte=mes_actual))& (Q(fecha__year=año_actual) |(Q(fecha__year=año_actual, fecha__month=mes_actual)) ),usuario =request.user  # Gastos recurrentes que se superponen con el mes actual
             )
         # Crea un DataFrame de Pandas con los datos de los gastos
         data = {
