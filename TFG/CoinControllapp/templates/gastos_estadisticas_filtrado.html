@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block content %}
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="mb-4">Gastos de  {{ filtro_mes|capfirst }}</h1>
+
+            <button id="toggleFormBtn" class="btn btn-secondary mb-3">Mostrar Filtros</button>
+            <form id="filterForm" style="display: none;" method="GET" action="{% url 'filtrar_stats' tipo='Gasto' %}" class="mb-4">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for="filtro_mes" style="font-weight: bold;">Filtrar por mes:</label>
+                        <select id="filtro_mes" name="filtro_mes" required>
+                            <option value="" disabled selected hidden>Todos los meses</option>
+                            <option value="Enero">Enero</option>
+                            <option value="Febrero">Febrero</option>
+                            <option value="Marzo">Marzo</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Mayo">Mayo</option>
+                            <option value="Junio">Junio</option>
+                            <option value="Julio">Julio</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Septiembre">Septiembre</option>
+                            <option value="Octubre">Octubre</option>
+                            <option value="Noviembre">Noviembre</option>
+                            <option value="Diciembre">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="filtro_año" style="font-weight: bold;">Filtrar por año:</label>
+                        <input type="number" id="filtro_año" name="filtro_año" min="1950" max="9999" placeholder="Ej: 2022">
+                    </div>
+                    <div class="col-md-3 align-self-end">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="card">
+                <div class="card-body">
+                    <img src="{% url 'obtener_filtro_mes' tipo='Gasto' mes=filtro_mes %}?año={{filtro_año}}" alt="Gráfica de Gastos" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.getElementById('toggleFormBtn').addEventListener('click', function() {
+        var form = document.getElementById('filterForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+            this.textContent = 'Ocultar Filtros';
+        } else {
+            form.style.display = 'none';
+            this.textContent = 'Mostrar Filtros';
+        }
+    });
+</script>
+
+{% endblock %}

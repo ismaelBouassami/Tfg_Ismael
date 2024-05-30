@@ -1,0 +1,24 @@
+.coin {
+  text-align: left;
+  font-family: Arial;
+  font-size: 30px;
+  color: #d35050;
+  text-shadow: 0px 0px 9px #d35050;
+  width: auto;
+}
+.coin,
+.controll {
+  display: inline-block;
+}
+.controll {
+  width: auto;
+  text-align: left;
+  font-family: Arial;
+  font-size: 30px;
+  color: #d3cf50;
+  text-shadow: 0px 0px 9px #d3cf50;
+}
+
+.espaciador {
+  width: 50px;
+}

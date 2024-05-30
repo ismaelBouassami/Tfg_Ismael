@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+  .boton-grande {
+    width: 100%;
+    height: 60vh;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background-color: #e3ebf0be;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .container-fluid {
+
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    color: #333;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container-fluid">
+    <h1 class="mt-4 mb-4 text-center">Mis Estadisticas</h1>
+    
+    <div class="row">
+        <div class="col d-flex align-items-center justify-content-center">
+            <a href={% url 'stats_inicio' mes=mes tipo='Gasto' %}  class="btn  boton-grande float-left text-center" style="color: #f83030;" >Gastos <br> </a>
+          </div>
+      
+          <div class="col d-flex align-items-center justify-content-center">
+              <a href={% url 'stats_inicio' mes=mes tipo='Ingreso'%}  class="btn  boton-grande float-left text-center" style="color: #f83030;">Ingresos <br> </a>
+            </div>
+          
+    </div>
+    
+      
+          
+    
+  </div>
+  </div>
+
+{% endblock %}

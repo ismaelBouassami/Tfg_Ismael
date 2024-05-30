@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+body {
+  background-color: #f8f9fa;
+}
+.container {
+  margin-top: 50px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.welcome-text {
+  display: flex;
+  align-items: center;
+}
+.welcome-text h1 {
+  color: #f8f430;
+  font-weight: bold;
+}
+.welcome-text p {
+  color: #000000;
+  font-size: 2em;
+  font-weight: bold;
+}
+.responsive-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+</style>
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+          <img src="../static/img/home image.jpg"
+           alt="Home" class="responsive-image img-fluid">
+      </div>
+      <div class="col-md-6 welcome-text">
+          <div>
+              <h1 class="display-4">Bienvenid@ a CoinControl</h1>
+              <p class="lead">Tus ingresos <br> y gastos a un click</p>
+          </div>
+      </div>
+  </div>
+  
+</div>
+<div> <br><br><br></div>
+
+{% endblock %}

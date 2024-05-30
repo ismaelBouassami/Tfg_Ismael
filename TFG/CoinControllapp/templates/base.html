@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoinControl</title>
+    <!-- Agrega los enlaces a los archivos CSS de Bootstrap -->
+
+    <style>
+        body {
+            background-color: #3c8ddf;
+        }
+
+        .coin {
+            text-align: left;
+            font-family: Arial;
+            font-size: 30px;
+            color: #d35050;
+            text-shadow: 0px 0px 9px #d35050;
+            width: auto;
+        }
+
+        .coin,
+        .controll {
+            display: inline-block;
+            margin-top: 15%;
+            margin-bottom: auto;
+        }
+
+        .controll {
+            width: auto;
+            text-align: left;
+            font-family: Arial;
+            font-size: 30px;
+            color: #d3cf50;
+            text-shadow: 0px 0px 9px #d3cf50;
+        }
+
+        .espaciador {
+            width: 50px;
+        }
+    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+
+
+        <h1>
+            <p class="coin">Coin
+            <p class="controll">Control</p>
+            </p>
+        </h1>
+        <div class="espaciador"></div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: azure;" href={% url 'home' %}>Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link"style="color: azure;"  href={% url 'mis_gastos' %}>Mis Gastos <span
+                        
+                            class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link"style="color: azure;"  href={% url 'mis_ingresos' %}>Mis Ingresos <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link"style="color: azure;"  href={% url 'mis_estadisticas' %}>Mis Estadisticas <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle bg-dark" style="color: azure;"  href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bienvenido, {{ request.user.username }}
+                    </a>
+                    <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" style="color: azure;" href="#">Ver perfil</a>
+                        <a class="dropdown-item" style="color: azure;"  href="{% url 'logout' %}">Cerrar Sesión</a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href={% url 'login' %} style="color: azure;" >Login</a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href={% url 'register' %} style="color: azure;" >Registro</a>
+                </li>
+                {% endif %}
+
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Agrega los enlaces a los archivos JavaScript de Bootstrap (jQuery primero, luego Popper.js, y luego Bootstrap JS) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</header>
+
+<body>
+    {% block content %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+{% extends 'base.html' %} {% block content %}
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #d35050;
+        color: #fff;
+        border-bottom: 0;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        border-radius: 5px;
+        background-color: #d35050;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">Registro de Usuario</div>
+                <div class="card-body">
+                    {% load widget_tweaks %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if error %}
+                        {% for field, error_list in error.items %}
+                        {% for error_item in error_list %}
+                        <li style="color: #d35050;">{{ error_item.message }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                        <br>
+                        {% endif %}
+
+                        <div class="form-outline form-white mb-4">
+                            {{ user_form.username.label_tag }}
+                            {% render_field user_form.username class+="form-control form-control-lg" %}
+                        </div>
+
+                        <div class="form-outline form-white mb-4">
+                            {{ user_form.first_name.label_tag }}
+                            {% render_field user_form.first_name class+="form-control form-control-lg" %}
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            {{ user_form.email.label_tag }}
+                            {% render_field user_form.email class+="form-control form-control-lg" %}
+                        </div>
+
+                        <div class="form-outline form-white mb-4">
+                            {{ user_form.password.label_tag }}
+                            {{ user_form.password }}
+                            <div id="password-error" style="color: red;"></div>
+                        </div>
+                        <div class="form-outline form-white mb-4">
+                            {{ user_form.password2.label_tag }}
+                            {{ user_form.password2 }}
+                            <div id="password-error2" style="color: red;"></div>
+                        </div>
+
+
+                        {% block scripts %}
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script src="../static/js/password_validation.js">
+                            
+                        </script>
+                        {% endblock %}
+
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

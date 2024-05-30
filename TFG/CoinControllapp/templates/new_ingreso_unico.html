@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #d35050;
+        color: #fff;
+        border-bottom: 0;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        border-radius: 5px;
+        background-color: #d35050;
+    }
+</style>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">Crear nuevo gasto único</div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'new_ingreso_unico' %}">
+                        {% csrf_token %}
+
+                        <p class="error" style="color: #d35050;">{{ error }}</p>
+
+
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" name="cantidad" id="cantidad" step="0.01"  min="0" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <select name="categoria" id="categoria" class="form-control" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Salario">Salario</option>
+                                <option value="Ventas">Ventas</option>
+                                <option value="Bonificaciones">Bonificaciones</option>
+                                <option value="Comisiones">Comisiones</option>
+                                <option value="Alquiler">Alquiler</option>
+                                <option value="Inversiones">Inversiones</option>
+                                <option value="Pensiones">Pensiones</option>
+                                <option value="Subsidios">Subsidios</option>
+                                <option value="Regalos">Regalos</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="fecha">Fecha de inicio:</label>
+                            <input type="date" name="fecha" id="fecha" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Crear Ingreso </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

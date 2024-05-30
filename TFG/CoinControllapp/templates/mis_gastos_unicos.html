@@ -1,0 +1,225 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+    body {
+       
+        background: #FAFAFA;
+    }
+
+    .order-card {
+        color: #fff;
+    }
+
+    .bg-c-blue {
+        background: linear-gradient(45deg, #4099ff, #73b4ff);
+    }
+
+    .bg-c-green {
+        background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+    }
+
+    .bg-c-yellow {
+        background: linear-gradient(45deg, #FFB64D, #ffcb80);
+    }
+
+    .bg-c-pink {
+        background: linear-gradient(45deg, #FF5370, #ff869a);
+    }
+
+
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+        box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+        border: none;
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card .card-block {
+        padding: 25px;
+    }
+
+    .order-card i {
+        font-size: 26px;
+    }
+
+    .f-left {
+        float: left;
+    }
+
+    .f-right {
+        float: right;
+    }
+</style>
+<div class="container">
+    <h1 class="mt-4 mb-4 text-center">Mis Gastos Únicos</h1>
+
+    <div class="text-center mb-3">
+        <button id="toggleFormBtn" class="btn btn-secondary ">Filtrar por rango fecha</button>
+        <button id="toggleFormBtn2" class="btn btn-secondary ">Filtrar por mes</button>
+        <button id="toggleFormBtn3" class="btn btn-secondary ">Filtrar por año</button>
+        <a href="{% url 'new_gasto_unico' %}" class="btn btn-secondary ">Añadir gasto unico</a>
+    </div>
+
+    <!-- Formulario de filtrado por rango de  fecha -->
+    <form id="filterForm" style="display: none;" method="GET" action="{% url 'filtrar_mis_gastos_rango_fecha_Unico' %}"
+        class="mb-4">
+        <div class="form-row ">
+            <div class="cols-3">
+
+                <label for="fecha_inicio" style="font-weight: bold;">Fecha de inicio:</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" required class="form-control">
+
+                <label for="fecha_fin" style="font-weight: bold;">Fecha de fin:</label>
+                <input type="date" id="fecha_fin" required name="fecha_fin" class="form-control">
+                <br>
+                <button type="submit" class="btn btn-secondary ">Filtrar</button>
+            </div>
+        </div>
+    </form>
+    <!-- Formulario de filtrado por rango de  fecha -->
+    <form id="filterForm2" style="display: none;" method="GET" action="{% url 'filtrar_mis_gastos_mes_Unico' %}" class="mb-4">
+        <div class="form-row ">
+            <div class="cols-3">
+                <label for="filtro_mes" style="font-weight: bold;">Filtrar por mes:</label> <br>
+                <select id="filtro_mes" name="filtro_mes" required>
+                    <!--   <option value="">Todos los meses</option>-->
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+
+                    <!-- Añade las opciones para los demás meses -->
+                </select>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-secondary ">Filtrar</button>
+            </div>
+
+        </div>
+    </form>
+    <form id="filterForm3" style="display: none;" method="GET" action="{% url 'filtrar_mis_gastos_año_Unico' %}" class="mb-4">
+        <div class="form-row ">
+            <div class="cols-3">
+                <label for="filtro_año" style="font-weight: bold;">Filtrar por año:</label><br>
+                <input type="filtro_año" id="filtro_año" name="filtro_año" required min="1950" max="9999"
+                    pattern="[0-9]{4}" title="Debe ser un año (202)" placeholder="2022">
+                <br><br>
+                <button type="submit" class="btn btn-secondary ">Filtrar</button>
+            </div>
+
+        </div>
+    </form>
+
+    <div class="row">
+
+        
+        {% for gasto in gastos %}
+        {% if forloop.counter0|divisibleby:4 %}
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">{{ gasto.nombre }}</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{ gasto.cantidad }}€</span>
+                    </h2>
+                    <p class="m-b-0">{{ gasto.categoria }}<span class="f-right"></span></p>
+                    <p class="m-b-0">{{ gasto.fecha }}</p>
+                    <div class="btn-group" role="group" aria-label="Botones de acción">
+                        <a href="{% url 'editar_gasto_unico_view' gasto.id %}" class="btn btn-warning" role="button" title="Editar"><i class="fa fa-pencil"></i></a>
+                        <div class="btn-group-divider" style="width: 10px;"></div>
+                        <a href="{% url 'borrar_gasto_unico' gasto.id %}" class="btn btn-danger" role="button" title="Borrar"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif forloop.counter0|divisibleby:3 %}
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-green order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">{{ gasto.nombre }}</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{ gasto.cantidad }}€</span>
+                    </h2>
+                    <p class="m-b-0">{{ gasto.categoria }}<span class="f-right"></span></p>
+                    <p class="m-b-0">{{ gasto.fecha }}</p>
+                    <div class="btn-group" role="group" aria-label="Botones de acción">
+                        <a href="{% url 'editar_gasto_unico_view' gasto.id %}" class="btn btn-warning" role="button" title="Editar"><i class="fa fa-pencil"></i></a>
+                        <div class="btn-group-divider" style="width: 10px;"></div>
+                        <a href="{% url 'borrar_gasto_unico' gasto.id %}" class="btn btn-danger" role="button" title="Borrar"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif forloop.counter0|divisibleby:2 %}
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">{{ gasto.nombre }}</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{ gasto.cantidad }}€</span>
+                    </h2>
+                    <p class="m-b-0">{{ gasto.categoria }}<span class="f-right"></span></p>
+                    <p class="m-b-0">{{ gasto.fecha }}</p>
+                    <div class="btn-group" role="group" aria-label="Botones de acción">
+                        <a href="{% url 'editar_gasto_unico_view' gasto.id %}" class="btn btn-warning" role="button" title="Editar"><i class="fa fa-pencil"></i></a>
+                        <div class="btn-group-divider" style="width: 10px;"></div>
+                        <a href="{% url 'borrar_gasto_unico' gasto.id %}" class="btn btn-danger" role="button" title="Borrar"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4 col-xl-3">
+            <div class="card bg-c-pink order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">{{ gasto.nombre }}</h6>
+                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>{{ gasto.cantidad }}€</span>
+                    </h2>
+                    <p class="m-b-0">{{ gasto.categoria }}<span class="f-right"></span></p>
+                    <p class="m-b-0">{{ gasto.fecha }}</p>
+                    <div class="btn-group" role="group" aria-label="Botones de acción">
+                        <a href="{% url 'editar_gasto_unico_view' gasto.id %}" class="btn btn-warning" role="button" title="Editar"><i class="fa fa-pencil"></i></a>
+                        <div class="btn-group-divider" style="width: 10px;"></div>
+                        <a href="{% url 'borrar_gasto_unico' gasto.id %}" class="btn btn-danger" role="button" title="Borrar"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        
+        <p class="text-center" style="font-weight: bold;">{{ errorfiltrarAño }}</p>
+
+    </div>
+</div>
+<script>
+    // Esconder formulario
+    $(document).ready(function () {
+        $('#toggleFormBtn').click(function () {
+            $('#filterForm').toggle();
+            var btnText = $('#filterForm').is(':visible') ? 'Ocultar' : 'Filtrar por rango fecha';
+            $(this).text(btnText);
+        })
+
+        $('#toggleFormBtn2').click(function () {
+            $('#filterForm2').toggle();
+            var btnText = $('#filterForm2').is(':visible') ? 'Ocultar' : 'Filtrar por Mes';
+            $(this).text(btnText);
+        })
+        $('#toggleFormBtn3').click(function () {
+            $('#filterForm3').toggle();
+            var btnText = $('#filterForm3').is(':visible') ? 'Ocultar' : 'Filtrar por Año';
+            $(this).text(btnText);
+        })
+    })
+</script>
+
+{% endblock %}

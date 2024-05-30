@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #d35050;
+        color: #fff;
+        border-bottom: 0;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        border-radius: 5px;
+        background-color: #d35050;
+    }
+</style>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">Editar Gasto Recurrente</div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'editar_gasto_recurrente' gasto.id %}">
+                        {% csrf_token %}
+                        <p class="error" style="color: #d35050;">{{ error }}</p>
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="{{ gasto.nombre }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="text" name="cantidad" id="cantidad" class="form-control"
+                                pattern="[0-9]+(\.[0-9]{1,2})?"" required title=" Por favor, introduce un número válido
+                                (por ejemplo, 123.45)">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Fecha:</label>
+                            <input type="date" id="fecha" name="fecha" class="form-control" value="{% if gasto.fecha %}{{ gasto.fecha|date:"Y-m-d" }}{% endif %}" required>
+                        </div>
+                        <div class="form-group">    
+                            <label for="fechaFin">Fecha fin de gasto:</label>
+                            <input type="date" id="fechaFin" name="fechaFin" class="form-control" value="{% if gasto.fechaFin %}{{ gasto.fechaFin|date:"Y-m-d" }}{% endif %}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría:</label>
+                            <select name="categoria" id="categoria" class="form-control" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Alimentación" {% if gasto.categoria == 'Alimentación' %} selected {% endif %}>Alimentación</option>
+                                <option value="Transporte" {% if gasto.categoria == 'Transporte' %} selected {% endif %}>Transporte</option>
+                                <option value="Vivienda" {% if gasto.categoria == 'Vivienda' %} selected {% endif %}>Vivienda</option>
+                                <option value="Entretenimiento" {% if gasto.categoria == 'Entretenimiento' %} selected {% endif %}>Entretenimiento</option>
+                                <option value="Salud" {% if gasto.categoria == 'Salud' %} selected {% endif %}>Salud</option>
+                                <option value="Educación" {% if gasto.categoria == 'Educación' %} selected {% endif %}>Educación</option>
+                                <option value="Ropa y calzado" {% if gasto.categoria == 'Ropa y calzado' %} selected {% endif %}>Ropa y calzado</option>
+                                <option value="Viajes y vacaciones" {% if gasto.categoria == 'Viajes y vacaciones' %} selected {% endif %}>Viajes y vacaciones</option>
+                                <option value="Deudas y finanzas" {% if gasto.categoria == 'Deudas y finanzas' %} selected {% endif %}>Deudas y finanzas</option>
+                                <option value="Otros" {% if gasto.categoria == 'Otros' %} selected {% endif %}>Otros</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // para poder poner la cantidad
+    document.addEventListener('DOMContentLoaded', function() {
+    var cantidadInput = document.getElementById('cantidad');
+    var gastoCantidad = "{{ gasto.cantidad }}";
+    // Reemplazar comas con puntos
+    gastoCantidad = gastoCantidad.replace(',', '.');
+    if (gastoCantidad !== "") {
+        cantidadInput.value = gastoCantidad;
+    }
+    });
+</script>
+{% endblock %}
